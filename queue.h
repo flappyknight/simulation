@@ -8,7 +8,7 @@ typedef struct {
 
 
 typedef struct Node {
-    Item item;
+    void *item;
     struct Node *next;
 } Node;
 
@@ -20,13 +20,12 @@ typedef struct {
 
 void init_queue(Queue *queue);
 
-void add_item(Queue *queue,const Item *item);
+void add_item(Queue *queue,const void *item);
 
-void pop_item(Queue *queue, Item *item);
+void pop_item(Queue *queue, void **item);
 
 void clear_queue(Queue *queue);
 
-void traverse_queue(Queue *queue, void (*func)(Item *));
+void traverse_queue(Queue *queue, void (*func)(void*, void*), void* additional_arg);
 
-static void copy_node(Node *dest, Node *src);
 

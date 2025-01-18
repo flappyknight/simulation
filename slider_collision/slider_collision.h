@@ -7,12 +7,15 @@ typedef struct {
     double velocity;
     double x;
 }
+
 Slider
 ;
 
 void collision(Slider *slider1, Slider *slider2);
 
-void move(Slider *slider, double dt);
+void move(void * slider, void * dt);
 
 Slider *spit();
+
+bool is_collision(Slider *slider1, Slider *slider2);
 

@@ -6,10 +6,10 @@ void init_queue(Queue *queue)
     queue->counts = 0;
 }
 
-void add_item(Queue *queue, const Item *item)
+void add_item(Queue *queue, const void *item)
 {
     Node *node = (Node *)malloc(sizeof(Node));
-    node->item = *item;
+    node->item = item;
     node->next = NULL;
     if (queue->rear == NULL)
     {
@@ -23,7 +23,7 @@ void add_item(Queue *queue, const Item *item)
     queue->counts++;
 }
 
-void pop_item(Queue *queue, Item *item)
+void pop_item(Queue *queue, void **item)
 {
     if (queue->front == NULL)
     {
@@ -48,12 +48,10 @@ void clear_queue(Queue *queue)
     queue->counts = 0;
 }
 
-void traverse_queue(Queue *queue, void (*func)(Item *))
-{
-    Node *node = queue->front;
-    while (node != NULL)
-    {
-        func(&node->item);
-        node = node->next;
+void traverse_queue(Queue *queue, void (*func)(void*, void*), void* additional_arg) {
+    Node *current = queue->front;
+    while (current != NULL) {
+        func(current->item, additional_arg);  // 传递队列元素和额外参数
+        current = current->next;
     }
 }
