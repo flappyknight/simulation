@@ -9,7 +9,7 @@ void init_queue(Queue *queue)
 void add_item(Queue *queue, const void *item)
 {
     Node *node = (Node *)malloc(sizeof(Node));
-    node->item = item;
+    node->item = (void *)item;
     node->next = NULL;
     if (queue->rear == NULL)
     {
