@@ -7,7 +7,7 @@
 #include "../utils.h"
 #include "../queue.h"
 
-#define SIMULATION_TIME 100
+#define SIMULATION_TIME 1000
 #define SPIT_FRE 10.0
 #define SPIT_MASS 1
 #define OBJECT_MASS 100
@@ -39,10 +39,12 @@ int main()
         {
             pop_item(&queue, (void **)&front_slider);
             collision(&box, front_slider);
-            printf("after %d times of collision, the velocity of the box is %lf now",count, box.velocity);
+            free(front_slider);
+            count++;
+            printf("%f seconds:after %d times of collision, the velocity of the box is %lf now\n",current_time, count, box.velocity);
         }
         traverse_queue(&queue, move, (void *)&dt);
-
+        move(&box, (void *)&dt);
     }
 
 }
@@ -50,8 +52,9 @@ int main()
 
 void  collision(Slider *slider1, Slider *slider2)
 {
+    double v2 = slider2->velocity;
     slider2->velocity = ((slider2->mass-slider1->mass)*slider2->velocity + 2*slider1->mass*slider1->velocity) / (slider1->mass+slider2->mass);
-    slider1->velocity = ((slider1->mass-slider2->mass)*slider1->velocity + 2*slider2->mass*slider2->velocity)/ (slider1->mass+slider2->mass);
+    slider1->velocity = ((slider1->mass-slider2->mass)*slider1->velocity + 2*slider2->mass*v2)/ (slider1->mass+slider2->mass);
 }
 
 
